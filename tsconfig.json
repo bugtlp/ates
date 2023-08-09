@@ -1,0 +1,26 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "incremental": true,
+    "inlineSourceMap": false,
+    "inlineSources": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "paths": {}
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
