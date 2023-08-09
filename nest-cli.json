@@ -4,7 +4,6 @@
   "monorepo": true,
   "root": "apps/task-tracker",
   "compilerOptions": {
-    "webpack": true,
     "tsConfigPath": "apps/task-tracker/tsconfig.app.json"
   },
   "projects": {
