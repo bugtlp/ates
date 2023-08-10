@@ -9,6 +9,7 @@ import {
   MESSAGE_BROKER_CLIENT,
   messageBrokerClientProvider,
 } from './mb.provider';
+import { PriceModule } from './price/price.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import {
         join(__dirname, '../', '.env'),
       ],
     }),
+    PriceModule,
   ],
   controllers: [AppController],
   providers: [dbConnectionProvider, messageBrokerClientProvider, AppService],

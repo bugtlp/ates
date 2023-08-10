@@ -6,3 +6,9 @@ export interface Task {
   price_completed: number;
   assignee_id: string;
 }
+
+export type NewTask = Omit<Task, 'id' | 'completed'>;
+
+export interface AddTaskDto {
+  description: string;
+}

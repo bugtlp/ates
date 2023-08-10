@@ -1,5 +1,3 @@
-const TABLE_NAME = 'tasks';
-
 /**
  * Migration up
  * @param {import("knex")} knex
@@ -8,7 +6,12 @@ const TABLE_NAME = 'tasks';
 exports.up = async (knex) => {
   await knex.schema.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
 
-  return knex.schema.createTable(TABLE_NAME, (t) => {
+  await knex.schema.createTable('emploeyes', (t) => {
+    t.uuid('id', { primaryKey: true }).notNullable();
+    t.string('role').notNullable();
+  });
+
+  return knex.schema.createTable('tasks', (t) => {
     t.uuid('id', { primaryKey: true }).defaultTo(
       knex.raw('uuid_generate_v4()'),
     );
@@ -18,6 +21,7 @@ exports.up = async (knex) => {
     t.decimal('price_completed').notNullable();
     t.uuid('assignee_id').notNullable();
 
+    t.foreign('assignee_id').references('emploeyes.id');
     t.unique(['id', 'assignee_id'], { useConstraint: true });
   });
 };
@@ -28,5 +32,6 @@ exports.up = async (knex) => {
  * @returns {Promise}
  */
 exports.down = async (knex) => {
-  return knex.schema.dropTable(TABLE_NAME);
+  await knex.schema.dropTable('tasks');
+  await knex.schema.dropTable('emploeyes');
 };
