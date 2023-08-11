@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientKafka } from '@nestjs/microservices';
 
 import {
-  CommonModule,
   MESSAGE_BROKER_CLIENT,
   dbConnectionProvider,
   messageBrokerClientProvider,
@@ -19,7 +18,6 @@ import { AuthService } from './auth.service';
       rootPath: 'public/auth',
       exclude: ['/add'],
     }),
-    CommonModule,
   ],
   controllers: [AuthController],
   providers: [dbConnectionProvider, messageBrokerClientProvider, AuthService],

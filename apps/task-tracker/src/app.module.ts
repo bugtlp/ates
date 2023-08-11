@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { HttpController } from './http.controller';
 import { AppService } from './app.service';
 import {
-  CommonModule,
   dbConnectionProvider,
   messageBrokerClientProvider,
   MESSAGE_BROKER_CLIENT,
@@ -13,7 +12,7 @@ import { PriceModule } from './price/price.module';
 import { KafkaController } from './kafka.controller';
 
 @Module({
-  imports: [ConfigModule.forRoot({}), PriceModule, CommonModule],
+  imports: [ConfigModule.forRoot({}), PriceModule],
   controllers: [HttpController, KafkaController],
   providers: [dbConnectionProvider, messageBrokerClientProvider, AppService],
 })
