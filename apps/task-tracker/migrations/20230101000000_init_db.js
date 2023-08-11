@@ -4,9 +4,7 @@
  * @returns {Promise}
  */
 exports.up = async (knex) => {
-  await knex.schema.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
-
-  await knex.schema.createTable('emploeyes', (t) => {
+  await knex.schema.createTable('employees', (t) => {
     t.uuid('id', { primaryKey: true }).notNullable();
     t.string('role').notNullable();
   });
@@ -21,7 +19,7 @@ exports.up = async (knex) => {
     t.decimal('price_completed').notNullable();
     t.uuid('assignee_id').notNullable();
 
-    t.foreign('assignee_id').references('emploeyes.id');
+    t.foreign('assignee_id').references('employees.id');
     t.unique(['id', 'assignee_id'], { useConstraint: true });
   });
 };
@@ -33,5 +31,5 @@ exports.up = async (knex) => {
  */
 exports.down = async (knex) => {
   await knex.schema.dropTable('tasks');
-  await knex.schema.dropTable('emploeyes');
+  await knex.schema.dropTable('employees');
 };
