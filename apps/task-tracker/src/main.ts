@@ -11,11 +11,11 @@ async function bootstrap(): Promise<void> {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'task-tracker',
+        clientId: config.get('KAFKA_CLIENT_ID'),
         brokers: [config.get('KAFKA_BROKER')],
       },
       consumer: {
-        groupId: 'task-tracker-consumer',
+        groupId: config.get('KAFKA_CONSUMER_GROUP_ID'),
       },
     },
   });
