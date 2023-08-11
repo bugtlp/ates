@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { DB_CONNECTION } from './db.provider';
-import { Knex } from 'knex';
-import { AddTaskDto, NewTask, Task } from './interfaces';
 import { lastValueFrom } from 'rxjs';
-import { MESSAGE_BROKER_CLIENT } from './mb.provider';
+import { Knex } from 'knex';
+
+import { AddTaskDto, NewTask, Task } from './interfaces';
+import { DB_CONNECTION, MESSAGE_BROKER_CLIENT } from '../../../libs/common/src';
 import { PriceService } from './price/price.service';
 
 @Injectable()
@@ -51,7 +51,9 @@ export class AppService {
       assignee_id: assignee.id,
     };
 
-    const taskId = await this.db(this.tableName).insert(task).returning('id');
+    const [{ taskId }] = await this.db(this.tableName)
+      .insert(task)
+      .returning('id');
 
     // Кидаем CUD событие ЗадачаСоздана
     await lastValueFrom(
@@ -98,7 +100,7 @@ export class AppService {
    * Вычисляет случайного исполнителя
    */
   private getRandomAssignee(): Promise<{ id: string } | null> {
-    return this.db('emploeyes')
+    return this.db('employees')
       .first('id')
       .whereNotIn('role', ['manager', 'admin'])
       .orderByRaw('random()');
