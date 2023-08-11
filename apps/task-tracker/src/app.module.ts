@@ -1,27 +1,20 @@
 import { Inject, Module, OnApplicationBootstrap } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
+import { HttpController } from './http.controller';
 import { AppService } from './app.service';
-import { dbConnectionProvider } from './db.provider';
-import { join } from 'path';
 import {
-  MESSAGE_BROKER_CLIENT,
+  CommonModule,
+  dbConnectionProvider,
   messageBrokerClientProvider,
-} from './mb.provider';
+  MESSAGE_BROKER_CLIENT,
+} from '../../../libs/common/src';
 import { PriceModule } from './price/price.module';
+import { KafkaController } from './kafka.controller';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: [
-        join(process.cwd(), '.env'),
-        join(__dirname, '../', '.env'),
-      ],
-    }),
-    PriceModule,
-  ],
-  controllers: [AppController],
+  imports: [ConfigModule.forRoot({}), PriceModule, CommonModule],
+  controllers: [HttpController, KafkaController],
   providers: [dbConnectionProvider, messageBrokerClientProvider, AppService],
 })
 export class AppModule implements OnApplicationBootstrap {
