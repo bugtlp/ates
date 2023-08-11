@@ -12,7 +12,7 @@
        <div class="text">
           Новый сотрудник
        </div>
-       <form action="add" method="post">
+       <form action="/add" method="post">
           <div class="data">
              <label>Логин</label>
              <input name="login" type="text" required>
@@ -23,7 +23,7 @@
           </div>
           <div class="data">
              <label>Роль</label>
-             <select required>
+             <select name="role" required>
               <option value="admin">Администратор</option>
               <option value="manager">Менеджер</option>
               <option value="accountant">Бухгалтер</option>
