@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Добавление сотрудника</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+ </head>
+ <body>
+  <div class="center">
+    <div class="container">
+       <div class="text">
+          Новый сотрудник
+       </div>
+       <form action="add" method="post">
+          <div class="data">
+             <label>Логин</label>
+             <input name="login" type="text" required>
+          </div>
+          <div class="data">
+             <label>Пароль</label>
+             <input name="password" type="password" required>
+          </div>
+          <div class="data">
+             <label>Роль</label>
+             <select required>
+              <option value="admin">Администратор</option>
+              <option value="manager">Менеджер</option>
+              <option value="accountant">Бухгалтер</option>
+              <option value="popug" selected>Обычный попуг</option>
+            </select>
+          </div>
+          <div class="btn">
+             <div class="inner"></div>
+             <button type="submit">Добавить</button>
+          </div>
+       </form>
+    </div>
+  </div>
+ </body>
+</html>
