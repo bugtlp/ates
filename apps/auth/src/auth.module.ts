@@ -10,14 +10,16 @@ import {
 } from '../../../libs/common/src';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { OAuthModule } from './oauth/oauth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({}),
     ServeStaticModule.forRoot({
       rootPath: 'public/auth',
-      exclude: ['/add'],
+      exclude: ['/add', '/oauth/(.*)'],
     }),
+    OAuthModule,
   ],
   controllers: [AuthController],
   providers: [dbConnectionProvider, messageBrokerClientProvider, AuthService],
