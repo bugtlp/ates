@@ -16,6 +16,7 @@ export class HttpController {
 
   @Get()
   getTasks(@Request() req: Request): Promise<Task[]> {
+    // Достаем пользователя из сессии
     const employeeId = '95086ab6-36f2-11ee-ad0c-c19e809d8a5c';
 
     return this.appService.getTasks(employeeId);
@@ -30,16 +31,21 @@ export class HttpController {
 
   @Post('complete')
   async completeTask(@Body('id') taskId: string): Promise<void> {
+    // Достаем пользователя из сессии
     const employeeId = '95086ab6-36f2-11ee-ad0c-c19e809d8a5c';
     // Проверка что задача пользователя (Guard)
 
     return this.appService.completeTask(taskId);
   }
 
-  @UseGuards(AuthGuard('local'))
-  @Post('/auth/login')
-  async login(@Request() req: Request) {
+  @UseGuards(AuthGuard('oauth2'))
+  @Get('oauth/login')
+  login() {}
+
+  @UseGuards(AuthGuard('oauth2'))
+  @Get('oauth/callback')
+  async callback(@Request() req: Request, res: Response) {
+    // Сохраняем пользователя в сессию
     // console.log(req.user);
-    return 'Yes';
   }
 }
