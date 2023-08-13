@@ -23,7 +23,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:task-tracker": "knex --knexfile ./apps/task-tracker/knexfile"
+    "db:auth": "knex --migrations-directory ./apps/auth/migrations",
+    "db:task-tracker": "knex --migrations-directory ./apps/task-tracker/migrations"
   },
   "dependencies": {
     "@nestjs/common": "10.1.2",
@@ -32,11 +33,14 @@
     "@nestjs/microservices": "10.1.2",
     "@nestjs/passport": "10.0.0",
     "@nestjs/platform-express": "10.1.2",
+    "@nestjs/serve-static": "4.0.0",
     "dotenv": "16.3.1",
     "kafkajs": "2.2.4",
     "knex": "2.5.1",
+    "nest-oauth2-server": "1.1.3",
+    "oauth2-server": "3.1.1",
     "passport": "0.6.0",
-    "passport-local": "1.0.0",
+    "passport-oauth2": "1.7.0",
     "pg": "8.11.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "5.0.0",
@@ -50,7 +54,9 @@
     "@types/jest": "29.5.3",
     "@types/mock-knex": "0.4.5",
     "@types/node": "20.4.5",
+    "@types/oauth2-server": "3.0.13",
     "@types/passport-local": "1.0.33",
+    "@types/passport-oauth2": "1.4.12",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "6.2.0",
     "@typescript-eslint/parser": "6.2.0",
@@ -86,8 +92,13 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@ates/common1(|/.*)$": "<rootDir>/libs/common1/src/$1"
+    }
   },
   "husky": {
     "hooks": {
