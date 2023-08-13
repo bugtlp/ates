@@ -4,7 +4,8 @@
   "monorepo": true,
   "root": "apps/task-tracker",
   "compilerOptions": {
-    "tsConfigPath": "apps/task-tracker/tsconfig.app.json"
+    "tsConfigPath": "apps/task-tracker/tsconfig.app.json",
+    "webpack": true
   },
   "projects": {
     "task-tracker": {
@@ -23,6 +24,15 @@
       "sourceRoot": "apps/auth/src",
       "compilerOptions": {
         "tsConfigPath": "apps/auth/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     }
   }
