@@ -28,10 +28,10 @@ export class AuthService {
       .insert(params)
       .returning('id');
 
-    // Кидаем CUD событие ПользовательСоздан
+    // Кидаем CUD событие СотрудникСоздан
     await lastValueFrom(
       this.mbClient.emit(
-        'auth.user.created',
+        'employee-stream',
         JSON.stringify({
           id: employeeId,
           login: params.login,
@@ -43,7 +43,7 @@ export class AuthService {
     // Кидаем бизнес событие СотрудникДобавлен
     await lastValueFrom(
       this.mbClient.emit(
-        'auth.employee_added',
+        'employee_added',
         JSON.stringify({
           id: employeeId,
           role: params.role,

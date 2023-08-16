@@ -8,7 +8,7 @@ import { UserCreatedEvent } from './interfaces';
 export class KafkaController {
   constructor(@Inject(DB_CONNECTION) private readonly db: Knex) {}
 
-  @EventPattern('auth.user.created')
+  @EventPattern('employee-stream')
   async handleUserCreated(@Payload() event: UserCreatedEvent): Promise<void> {
     const { id, role } = event;
     await this.db('employees').insert({ id, role });

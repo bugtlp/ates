@@ -58,9 +58,10 @@ export class AppService {
     // Кидаем CUD событие ЗадачаСоздана
     await lastValueFrom(
       this.mbClient.emit(
-        'tasks.task.created',
+        'task-stream',
         JSON.stringify({
           id: taskId,
+          description,
           price_assignee: priceAssignee,
           price_completed: priceCompleted,
           assignee_id: assignee.id,
@@ -71,7 +72,7 @@ export class AppService {
     // Кидаем бизнес событие ЗадачаДобавлена
     await lastValueFrom(
       this.mbClient.emit(
-        'tasks.task_added',
+        'task_live_cycle.task_added',
         JSON.stringify({
           id: taskId,
           assignee_id: assignee.id,
@@ -90,7 +91,7 @@ export class AppService {
 
     await lastValueFrom(
       this.mbClient.emit(
-        'tasks.task_completed',
+        'task_live_cycle.task_completed',
         JSON.stringify({ id: taskId }),
       ),
     );
