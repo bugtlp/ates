@@ -1,0 +1,10 @@
+{
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+  ],
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/node_modules": true
+  }
+}
