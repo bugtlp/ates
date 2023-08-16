@@ -1,5 +1,6 @@
 export interface Task {
   id: string;
+  jira_id: string;
   description: string;
   completed: boolean;
   price_assignee: number;
@@ -10,6 +11,7 @@ export interface Task {
 export type NewTask = Omit<Task, 'id' | 'completed'>;
 
 export interface AddTaskDto {
+  jiraId: string;
   description: string;
 }
 

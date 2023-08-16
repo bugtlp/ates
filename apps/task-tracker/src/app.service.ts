@@ -31,7 +31,7 @@ export class AppService {
    * Добавить задачу
    */
   async addTask(params: AddTaskDto): Promise<void> {
-    const { description } = params;
+    const { description, jiraId } = params;
 
     // Назначаем рандомного исполнителя
     const assignee = await this.getRandomAssignee();
@@ -45,6 +45,7 @@ export class AppService {
     const priceCompleted = this.priceService.calcPriceCompleted();
 
     const task: NewTask = {
+      jira_id: jiraId,
       description,
       price_assignee: priceAssignee,
       price_completed: priceCompleted,
@@ -61,6 +62,7 @@ export class AppService {
         'task-stream',
         JSON.stringify({
           id: taskId,
+          jira_id: jiraId,
           description,
           price_assignee: priceAssignee,
           price_completed: priceCompleted,
