@@ -11,10 +11,12 @@ import {
 
 import { HttpController } from './http.controller';
 import { AccountingService } from './accounting.service';
+import { SchemaRegistryModule } from '../../../libs/schema-registry/src';
+import { KafkaController } from './kafka.controller';
 
 @Module({
-  imports: [ConfigModule.forRoot({}), PassportModule],
-  controllers: [HttpController],
+  imports: [ConfigModule.forRoot({}), PassportModule, SchemaRegistryModule],
+  controllers: [HttpController, KafkaController],
   providers: [
     dbConnectionProvider,
     messageBrokerClientProvider,

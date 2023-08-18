@@ -99,7 +99,7 @@
     ],
     "moduleNameMapper": {
       "^common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^schema-registry|/.*)$": "<rootDir>/libs/schema-registry/src/$1"
+      "^schema-registry(|/.*)$": "<rootDir>/libs/schema-registry/src/$1"
     }
   },
   "husky": {
