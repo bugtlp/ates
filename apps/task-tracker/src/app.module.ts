@@ -9,13 +9,19 @@ import {
   messageBrokerClientProvider,
   MESSAGE_BROKER_CLIENT,
 } from '../../../libs/common/src';
+import { SchemaRegistryModule } from '../../../libs/schema-registry/src';
 import { PriceModule } from './price/price.module';
 import { KafkaController } from './kafka.controller';
 
 import { OAuth2Strategy } from './oauth2.guard';
 
 @Module({
-  imports: [ConfigModule.forRoot({}), PassportModule, PriceModule],
+  imports: [
+    ConfigModule.forRoot({}),
+    PassportModule,
+    PriceModule,
+    SchemaRegistryModule,
+  ],
   controllers: [HttpController, KafkaController],
   providers: [
     dbConnectionProvider,
