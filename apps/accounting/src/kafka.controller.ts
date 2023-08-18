@@ -9,7 +9,7 @@ export class KafkaController {
   constructor(@Inject(DB_CONNECTION) private readonly db: Knex) {}
 
   @EventPattern('employee-stream')
-  async handleUserCreated(
+  async handleEmployeeCreated(
     @Payload() event: EmployeeCreatedEvent,
   ): Promise<void> {
     const { id, role } = event;

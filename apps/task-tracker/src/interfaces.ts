@@ -15,7 +15,7 @@ export interface AddTaskDto {
   description: string;
 }
 
-export interface UserCreatedEvent {
+export interface EmployeeCreatedEvent {
   id: string;
   login: string;
   role: string;

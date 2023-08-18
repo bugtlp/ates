@@ -24,7 +24,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:auth": "knex --migrations-directory ./apps/auth/migrations",
-    "db:task-tracker": "knex --migrations-directory ./apps/task-tracker/migrations"
+    "db:task-tracker": "knex --migrations-directory ./apps/task-tracker/migrations",
+    "db:accounting": "knex --migrations-directory ./apps/accounting/migrations"
   },
   "dependencies": {
     "@nestjs/common": "10.1.2",
