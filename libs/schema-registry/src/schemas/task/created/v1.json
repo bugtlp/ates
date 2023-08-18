@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price_assignee": {
+      "type": "integer"
+    },
+    "price_completed": {
+      "type": "integer"
+    },
+    "assignee_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "description",
+    "price_assignee",
+    "price_completed",
+    "assignee_id"
+  ],
+  "additionalProperties": false
+}

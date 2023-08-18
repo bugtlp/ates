@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "assignee_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "assignee_id"
+  ],
+  "additionalProperties": false
+}
