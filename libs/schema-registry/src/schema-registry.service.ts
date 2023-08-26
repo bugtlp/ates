@@ -29,4 +29,14 @@ export class SchemaRegistryService {
 
     throw new Error('Encode error');
   }
+
+  public decode(data: any, eventName: string): any {
+    const parsedData = JSON.parse(data);
+
+    if (this.validate(parsedData, eventName)) {
+      return parsedData;
+    }
+
+    throw new Error('Decode error');
+  }
 }

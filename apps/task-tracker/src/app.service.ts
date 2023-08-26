@@ -70,6 +70,15 @@ export class AppService {
       assignee_id: assignee.id,
     });
 
+    await this.mbClient.emit('task-stream', 'task.created.v2', {
+      id: taskId,
+      jira_id: jiraId,
+      description,
+      price_assignee: priceAssignee,
+      price_completed: priceCompleted,
+      assignee_id: assignee.id,
+    });
+
     // Кидаем бизнес событие
     await this.mbClient.emit('task_live_cycle.task_added', 'task.added.v1', {
       id: taskId,
