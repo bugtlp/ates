@@ -24,7 +24,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:auth": "knex --migrations-directory ./apps/auth/migrations",
-    "db:task-tracker": "knex --migrations-directory ./apps/task-tracker/migrations"
+    "db:task-tracker": "knex --migrations-directory ./apps/task-tracker/migrations",
+    "db:accounting": "knex --migrations-directory ./apps/accounting/migrations"
   },
   "dependencies": {
     "@nestjs/common": "10.1.2",
@@ -34,6 +35,7 @@
     "@nestjs/passport": "10.0.0",
     "@nestjs/platform-express": "10.1.2",
     "@nestjs/serve-static": "4.0.0",
+    "ajv": "8.12.0",
     "dotenv": "16.3.1",
     "kafkajs": "2.2.4",
     "knex": "2.5.1",
@@ -96,8 +98,8 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^@ates/common1(|/.*)$": "<rootDir>/libs/common1/src/$1"
+      "^common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^schema-registry(|/.*)$": "<rootDir>/libs/schema-registry/src/$1"
     }
   },
   "husky": {

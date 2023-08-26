@@ -1,10 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { Knex } from 'knex';
 
 import { AddTaskDto, NewTask, Task } from './interfaces';
-import { DB_CONNECTION, MESSAGE_BROKER_CLIENT } from '../../../libs/common/src';
+import {
+  DB_CONNECTION,
+  MESSAGE_BROKER_CLIENT,
+  MessageBrokerClient,
+} from '../../../libs/common/src';
 import { PriceService } from './price/price.service';
 
 @Injectable()
@@ -13,7 +16,8 @@ export class AppService {
 
   constructor(
     @Inject(DB_CONNECTION) private readonly db: Knex,
-    @Inject(MESSAGE_BROKER_CLIENT) private readonly mbClient: ClientKafka,
+    @Inject(MESSAGE_BROKER_CLIENT)
+    private readonly mbClient: MessageBrokerClient,
     private readonly priceService: PriceService,
   ) {}
 
@@ -31,7 +35,7 @@ export class AppService {
    * Добавить задачу
    */
   async addTask(params: AddTaskDto): Promise<void> {
-    const { description } = params;
+    const { description, jiraId } = params;
 
     // Назначаем рандомного исполнителя
     const assignee = await this.getRandomAssignee();
@@ -45,40 +49,32 @@ export class AppService {
     const priceCompleted = this.priceService.calcPriceCompleted();
 
     const task: NewTask = {
+      jira_id: jiraId,
       description,
       price_assignee: priceAssignee,
       price_completed: priceCompleted,
       assignee_id: assignee.id,
     };
 
-    const [{ taskId }] = await this.db(this.tableName)
+    const [{ id: taskId }] = await this.db(this.tableName)
       .insert(task)
       .returning('id');
 
     // Кидаем CUD событие ЗадачаСоздана
-    await lastValueFrom(
-      this.mbClient.emit(
-        'task-stream',
-        JSON.stringify({
-          id: taskId,
-          description,
-          price_assignee: priceAssignee,
-          price_completed: priceCompleted,
-          assignee_id: assignee.id,
-        }),
-      ),
-    );
+    await this.mbClient.emit('task-stream', 'task.created.v1', {
+      id: taskId,
+      //jira_id: jiraId,
+      description,
+      price_assignee: priceAssignee,
+      price_completed: priceCompleted,
+      assignee_id: assignee.id,
+    });
 
-    // Кидаем бизнес событие ЗадачаДобавлена
-    await lastValueFrom(
-      this.mbClient.emit(
-        'task_live_cycle.task_added',
-        JSON.stringify({
-          id: taskId,
-          assignee_id: assignee.id,
-        }),
-      ),
-    );
+    // Кидаем бизнес событие
+    await this.mbClient.emit('task_live_cycle.task_added', 'task.added.v1', {
+      id: taskId,
+      assignee_id: assignee.id,
+    });
   }
 
   /**
@@ -89,11 +85,12 @@ export class AppService {
       .update({ completed: true })
       .where('id', taskId);
 
-    await lastValueFrom(
-      this.mbClient.emit(
-        'task_live_cycle.task_completed',
-        JSON.stringify({ id: taskId }),
-      ),
+    await this.mbClient.emit(
+      'task_live_cycle.task_completed',
+      'task.completed.v1',
+      {
+        id: taskId,
+      },
     );
   }
 

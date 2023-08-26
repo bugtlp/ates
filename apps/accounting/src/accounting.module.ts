@@ -2,35 +2,28 @@ import { Inject, Module, OnApplicationBootstrap } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { HttpController } from './http.controller';
-import { AppService } from './app.service';
+
 import {
   dbConnectionProvider,
   messageBrokerClientProvider,
   MESSAGE_BROKER_CLIENT,
 } from '../../../libs/common/src';
+
+import { HttpController } from './http.controller';
+import { AccountingService } from './accounting.service';
 import { SchemaRegistryModule } from '../../../libs/schema-registry/src';
-import { PriceModule } from './price/price.module';
 import { KafkaController } from './kafka.controller';
 
-import { OAuth2Strategy } from './oauth2.guard';
-
 @Module({
-  imports: [
-    ConfigModule.forRoot({}),
-    PassportModule,
-    PriceModule,
-    SchemaRegistryModule,
-  ],
+  imports: [ConfigModule.forRoot({}), PassportModule, SchemaRegistryModule],
   controllers: [HttpController, KafkaController],
   providers: [
     dbConnectionProvider,
     messageBrokerClientProvider,
-    OAuth2Strategy,
-    AppService,
+    AccountingService,
   ],
 })
-export class AppModule implements OnApplicationBootstrap {
+export class AccountingModule implements OnApplicationBootstrap {
   constructor(@Inject(MESSAGE_BROKER_CLIENT) readonly mbClient: ClientKafka) {}
 
   async onApplicationBootstrap() {
